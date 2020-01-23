@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <!-- 定义模板结构 -->
+    <script id="tmp" type="text/html">
+        <div>姓名：{{name}}</div>
+        <div>年龄：{{age }}</div>
+        <div>性别：{{  gender}}</div>
+        <div>住址：{{address  }}</div>
+    </script>
+    <!-- 
+    <script src="./template-web.js"></script>
+     -->
+    <script>
+        /**
+                        id:   模板结构的id
+                         data: 要渲染的数据
+                         // 思路
+                             // 1. 根据id去找到模板的内容
+                                     // 2. 做替换
+                        //  {{name}} -----> data.name
+                            //  {{ age }}  -----> data.age
+                            // 3. 返回替换之后的字符串
+                             */
+        function my_template(id, data) {
+            //    字符串
+            var str = document.querySelector("#" + id).innerHTML;
+            //  定义正则
+            var reg = /{{\s*([a-zA-Z]+)\s*}}/g;
+            //  循环替换 直到为null 结束
+            var result = reg.exec(str);
+            while (result) {
+                str = str.replace(result[0], data[result[1]]);
+                result = reg.exec(str)
+            }
+            //  获取结果
+            return str;
+        }
+
+        // 例子
+        var data = {
+            name: "zs",
+            age: "18",
+            gender: "男",
+            address: "哥谭市"
+        }
+        var haha = my_template("tmp", data);
+        console.log(haha);
+    </script>
+
+
+</body>
+
+</html>
